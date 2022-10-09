@@ -3,7 +3,7 @@ import style from './home.module.css'
 
 const Home = () => {
   return (
-    <div>
+    <div className='text-6xl text-blue-color'>
       home
     </div>
   );
