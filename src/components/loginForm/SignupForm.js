@@ -13,10 +13,10 @@ const SignupForm = () => {
   return (
     <form onSubmit={handleSubmit(signUp)}>
       <div className="mb-3 mt-4 relative flex gap-3 justify-between">
-        <div className="w-1/2">
+        <div className="w-1/2 relative">
           <input
             className={`w-full bg-bg-secondary px-3 py-2 rounded-md  border-[1px] ${
-              errors.email ? "border-error focus:outline-error" : "border-dark-color-secondary focus:outline-none"
+              errors.firstName ? "border-error focus:outline-error" : "border-dark-color-secondary focus:outline-none"
             }`}
             type="text"
             name="firstName"
@@ -25,11 +25,20 @@ const SignupForm = () => {
               required: { value: true, message: "What's your name?" },
             })}
           />
+          
+          {errors?.firstName && (
+            <>
+              <p className=" text-white text-center absolute w-full px-3 py-3 rounded-lg bg-error -top-14 ">{errors.firstName.message}</p>
+              <div class="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
+                <div class=" h-3 w-3 bg-error -rotate-45 transform origin-top-left"></div>
+              </div>
+            </>
+          )}
         </div>
-        <div className="w-1/2">
+        <div className="w-1/2 relative">
           <input
             className={`w-full bg-bg-secondary px-3 py-2 rounded-md  border-[1px] ${
-              errors.email ? "border-error focus:outline-error" : "border-dark-color-secondary focus:outline-none"
+              errors.lastName ? "border-error focus:outline-error" : "border-dark-color-secondary focus:outline-none"
             }`}
             type="text"
             name="lastName"
@@ -38,6 +47,14 @@ const SignupForm = () => {
               required: { value: true, message: "What's your surname?" },
             })}
           />
+         {errors?.lastName && (
+            <>
+              <p className=" text-white text-center absolute w-full px-3 py-3 rounded-lg bg-error -top-14 ">{errors.lastName.message}</p>
+              <div class="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
+                <div class=" h-3 w-3 bg-error -rotate-45 transform origin-top-left"></div>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="mb-3">
@@ -60,7 +77,7 @@ const SignupForm = () => {
       <div className="mb-3">
         <input
           className={`w-full bg-bg-secondary px-3 py-2 rounded-md  border-[1px] ${
-            errors.email ? "border-error focus:outline-error" : "border-dark-color-secondary focus:outline-none"
+            errors.password ? "border-error focus:outline-error" : "border-dark-color-secondary focus:outline-none"
           }`}
           type="password"
           name="password"
@@ -70,6 +87,7 @@ const SignupForm = () => {
             minLength: { value: 8, message: "Password length is too short" },
           })}
         />
+        
       </div>
       <div className="mb-3">
         <h6 className="text-sm">
@@ -121,7 +139,7 @@ const SignupForm = () => {
         <div className="flex gap-3 mt-1 justify-between">
           <label htmlFor="femaleGenderRadio" className="flex justify-between w-1/3 px-3 py-2 rounded-md border-[1px]">
             <span>Female</span>
-            <input value="female" type="radio" name="gender" id="femaleGenderRadio" className="" {...register("gender")} />
+            <input defaultChecked value="female" type="radio" name="gender" id="femaleGenderRadio" className="" {...register("gender")} />
           </label>
           <label htmlFor="maleGenderRadio" className="flex justify-between w-1/3 px-3 py-2 rounded-md border-[1px]">
             <span>Male</span>
