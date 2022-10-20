@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import monthDetector from "../../features/monthDitector";
 
 const SignupForm = () => {
+  const formRef = useRef(null);
+  const [days, setDays] = useState(Array.from(new Array(31), (element, index) => 1 + index));
   const {
     register,
     handleSubmit,
@@ -10,8 +13,31 @@ const SignupForm = () => {
   const signUp = (data) => {
     console.log(data);
   };
+
+  const configureDays = () => {
+    if (parseInt(formRef.current?.birthMonth?.value) === 2) {
+      if (
+        (0 === parseInt(formRef.current?.birthYear?.value) % 4 && 0 !== parseInt(formRef.current?.birthYear?.value) % 100) ||
+        0 === parseInt(formRef.current?.birthYear?.value) % 400
+      ) {
+        setDays(Array.from(new Array(29), (element, index) => 1 + index));
+      } else {
+        setDays(Array.from(new Array(28), (element, index) => 1 + index));
+      }
+    } else if (
+      parseInt(formRef.current?.birthMonth?.value) === 4 ||
+      parseInt(formRef.current?.birthMonth?.value) === 6 ||
+      parseInt(formRef.current?.birthMonth?.value) === 9 ||
+      parseInt(formRef.current?.birthMonth?.value) === 11
+    ) {
+      setDays(Array.from(new Array(30), (element, index) => 1 + index));
+    } else {
+      setDays(Array.from(new Array(31), (element, index) => 1 + index));
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(signUp)}>
+    <form onChange={configureDays} ref={formRef} onSubmit={handleSubmit(signUp)}>
       <div className="mb-3 mt-4 relative flex gap-3 justify-between">
         <div className="w-1/2 relative">
           <input
@@ -25,7 +51,7 @@ const SignupForm = () => {
               required: { value: true, message: "What's your name?" },
             })}
           />
-          
+
           {errors?.firstName && (
             <>
               <p className=" text-white text-center absolute w-full px-3 py-3 rounded-lg bg-error -top-14 ">{errors.firstName.message}</p>
@@ -47,7 +73,7 @@ const SignupForm = () => {
               required: { value: true, message: "What's your surname?" },
             })}
           />
-         {errors?.lastName && (
+          {errors?.lastName && (
             <>
               <p className=" text-white text-center absolute w-full px-3 py-3 rounded-lg bg-error -top-14 ">{errors.lastName.message}</p>
               <div class="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
@@ -87,7 +113,6 @@ const SignupForm = () => {
             minLength: { value: 8, message: "Password length is too short" },
           })}
         />
-        
       </div>
       <div className="mb-3">
         <h6 className="text-sm">
@@ -104,7 +129,11 @@ const SignupForm = () => {
               min: { value: 1, message: "invalid date selected" },
             })}
           >
-            <option value="14">14</option>
+            {days.map((day, index) => (
+              <option key={index} value={day}>
+                {day}
+              </option>
+            ))}
           </select>
           <select
             name="birthMonth"
@@ -114,9 +143,11 @@ const SignupForm = () => {
               required: { value: true, message: "birth month isn't selected" },
             })}
           >
-            <option value="oct">oct</option>
-            <option value="oct">jov</option>
-            <option value="oct">oct</option>
+            {Array.from(new Array(12), (element, index) => 1 + index).map((monthIndex, index) => (
+              <option key={index} value={monthIndex}>
+                {monthDetector(monthIndex)}
+              </option>
+            ))}
           </select>
           <select
             name="birthYear"
@@ -126,9 +157,11 @@ const SignupForm = () => {
               required: { value: true, message: "birth Year isn't selected" },
             })}
           >
-            <option value="1044">1044</option>
-            <option value="2022">2022</option>
-            <option value="oct">oct</option>
+            {Array.from(new Array(100), (element, index) => new Date().getFullYear() - 18 - index).map((year, index) => (
+              <option key={index} value={year}>
+                {year}
+              </option>
+            ))}
           </select>
         </div>
       </div>
