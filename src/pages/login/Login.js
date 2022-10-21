@@ -1,6 +1,6 @@
 import React from "react";
-import LoginForm from "../../components/loginForm/LoginForm";
-import SignupModal from "../../components/loginForm/SignupModal";
+import LoginForm from "../../components/loginPage/LoginForm";
+import SignupModal from "../../components/loginPage/SignupModal";
 
 const Login = () => {
   return (
@@ -19,7 +19,7 @@ const Login = () => {
               <hr className="text-divider-color" />
               <div className="flex justify-center pt-5">
                 <label
-                  for="signUpModalCheck"
+                  htmlFor="signUpModalCheck"
                   className="px-3 py-3 text-center rounded-lg cursor-pointer text-bg-primary font-bold text-md bg-green-color modal-button hover:bg-[#36A420]"
                 >
                   Create new account

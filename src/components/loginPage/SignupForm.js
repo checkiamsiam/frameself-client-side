@@ -35,8 +35,8 @@ const SignupForm = () => {
           {errors?.firstName && (
             <>
               <p className=" text-white text-center absolute w-full px-3 py-3 rounded-lg bg-error -top-14 ">{errors.firstName.message}</p>
-              <div class="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
-                <div class=" h-3 w-3 bg-error -rotate-45 transform origin-top-left"></div>
+              <div className="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
+                <div className=" h-3 w-3 bg-error -rotate-45 transform origin-top-left"></div>
               </div>
             </>
           )}
@@ -56,8 +56,8 @@ const SignupForm = () => {
           {errors?.lastName && (
             <>
               <p className=" text-white text-center absolute w-full px-3 py-3 rounded-lg bg-error -top-14 ">{errors.lastName.message}</p>
-              <div class="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
-                <div class=" h-3 w-3 bg-error -rotate-45 transform origin-top-left"></div>
+              <div className="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
+                <div className=" h-3 w-3 bg-error -rotate-45 transform origin-top-left"></div>
               </div>
             </>
           )}

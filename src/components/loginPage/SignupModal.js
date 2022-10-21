@@ -4,9 +4,9 @@ import SignupForm from "./SignupForm";
 const SignupModal = () => {
   return (
     <>
-      <input type="checkbox" id="signUpModalCheck" class="modal-toggle" />
-      <div class="modal modal-bottom sm:modal-middle">
-        <div class="modal-box">
+      <input type="checkbox" id="signUpModalCheck" className="modal-toggle" />
+      <div className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
           <div className="flex justify-between mb-2">
             <div>
               <h5 className="text-3xl font-bold">Sign Up</h5>

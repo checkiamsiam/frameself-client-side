@@ -32,8 +32,8 @@ const LoginForm = () => {
           {errors?.email && (
             <>
               <p className=" text-white text-center absolute w-full px-3 py-3 rounded-lg bg-error -top-14 ">{errors.email.message}</p>
-              <div class="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
-                <div class=" h-3 w-3 bg-error -rotate-45 transform origin-top-left"></div>
+              <div className="w-8 overflow-hidden inline-block absolute left-2 -top-2 ">
+                <div className=" h-3 w-3 bg-error -rotate-45 transform origin-top-left"></div>
               </div>
             </>
           )}
@@ -56,8 +56,8 @@ const LoginForm = () => {
               <p className=" text-white text-center md:absolute w-full px-3 py-3 rounded-lg bg-error md:-left-[103%]  top-0 md:mt-0 mt-2">
                 {errors.password.message}
               </p>
-              <div class="md:h-8 w-8 overflow-hidden inline-block absolute md:-left-3 md:top-2 top-12 left-2  ">
-                <div class=" h-3 w-3 bg-error md:rotate-45 rotate-45 transform md:origin-top-left origin-bottom-left"></div>
+              <div className="md:h-8 w-8 overflow-hidden inline-block absolute md:-left-3 md:top-2 top-12 left-2  ">
+                <div className=" h-3 w-3 bg-error md:rotate-45 rotate-45 transform md:origin-top-left origin-bottom-left"></div>
               </div>
             </>
           )}
