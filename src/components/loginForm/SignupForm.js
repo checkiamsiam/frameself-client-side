@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import monthDetector from "../../features/monthDitector";
+import { configureDays } from "../../features/signUpFeature";
+import DateInputInSingUpForm from "./DateInputInSingupForm";
+import GenderInputInSignUP from "./GenderInputInSignUP";
 
 const SignupForm = () => {
   const formRef = useRef(null);
@@ -14,30 +16,8 @@ const SignupForm = () => {
     console.log(data);
   };
 
-  const configureDays = () => {
-    if (parseInt(formRef.current?.birthMonth?.value) === 2) {
-      if (
-        (0 === parseInt(formRef.current?.birthYear?.value) % 4 && 0 !== parseInt(formRef.current?.birthYear?.value) % 100) ||
-        0 === parseInt(formRef.current?.birthYear?.value) % 400
-      ) {
-        setDays(Array.from(new Array(29), (element, index) => 1 + index));
-      } else {
-        setDays(Array.from(new Array(28), (element, index) => 1 + index));
-      }
-    } else if (
-      parseInt(formRef.current?.birthMonth?.value) === 4 ||
-      parseInt(formRef.current?.birthMonth?.value) === 6 ||
-      parseInt(formRef.current?.birthMonth?.value) === 9 ||
-      parseInt(formRef.current?.birthMonth?.value) === 11
-    ) {
-      setDays(Array.from(new Array(30), (element, index) => 1 + index));
-    } else {
-      setDays(Array.from(new Array(31), (element, index) => 1 + index));
-    }
-  };
-
   return (
-    <form onChange={configureDays} ref={formRef} onSubmit={handleSubmit(signUp)}>
+    <form onChange={() => configureDays(formRef, setDays)} ref={formRef} onSubmit={handleSubmit(signUp)}>
       <div className="mb-3 mt-4 relative flex gap-3 justify-between">
         <div className="w-1/2 relative">
           <input
@@ -115,74 +95,10 @@ const SignupForm = () => {
         />
       </div>
       <div className="mb-3">
-        <h6 className="text-sm">
-          Date of birth <i className="info_icon"></i>
-        </h6>
-        <div className="flex gap-3 mt-1 justify-between">
-          <select
-            name="birthDay"
-            id="birthDay"
-            className="w-1/3 px-3 py-1 rounded-md text-xl border-[1px]"
-            {...register("birthDay", {
-              required: { value: true, message: "birthday isn't selected" },
-              max: { value: 31, message: "invalid date selected" },
-              min: { value: 1, message: "invalid date selected" },
-            })}
-          >
-            {days.map((day, index) => (
-              <option key={index} value={day}>
-                {day}
-              </option>
-            ))}
-          </select>
-          <select
-            name="birthMonth"
-            id="birthMonth"
-            className="w-1/3 px-3 py-1 rounded-md text-xl border-[1px]"
-            {...register("birthMonth", {
-              required: { value: true, message: "birth month isn't selected" },
-            })}
-          >
-            {Array.from(new Array(12), (element, index) => 1 + index).map((monthIndex, index) => (
-              <option key={index} value={monthIndex}>
-                {monthDetector(monthIndex)}
-              </option>
-            ))}
-          </select>
-          <select
-            name="birthYear"
-            id="birthYear"
-            className="w-1/3 px-3 py-1 rounded-md text-xl  border-[1px]"
-            {...register("birthYear", {
-              required: { value: true, message: "birth Year isn't selected" },
-            })}
-          >
-            {Array.from(new Array(100), (element, index) => new Date().getFullYear() - 18 - index).map((year, index) => (
-              <option key={index} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </div>
+        <DateInputInSingUpForm register={register} days={days} />
       </div>
       <div className="mb-3">
-        <h6 className="text-sm">
-          Gender <i className="info_icon"></i>
-        </h6>
-        <div className="flex gap-3 mt-1 justify-between">
-          <label htmlFor="femaleGenderRadio" className="flex justify-between w-1/3 px-3 py-2 rounded-md border-[1px]">
-            <span>Female</span>
-            <input defaultChecked value="female" type="radio" name="gender" id="femaleGenderRadio" className="" {...register("gender")} />
-          </label>
-          <label htmlFor="maleGenderRadio" className="flex justify-between w-1/3 px-3 py-2 rounded-md border-[1px]">
-            <span>Male</span>
-            <input value="male" type="radio" name="gender" id="maleGenderRadio" className="" {...register("gender")} />
-          </label>
-          <label htmlFor="transgenderRadio" className="flex justify-between w-1/3 px-3 py-2 rounded-md border-[1px]">
-            <span>Transgender</span>
-            <input value="transgender" type="radio" name="gender" id="transgenderRadio" className="" {...register("gender")} />
-          </label>
-        </div>
+        <GenderInputInSignUP register={register} />
       </div>
       <div>
         <p className="text-xs">
