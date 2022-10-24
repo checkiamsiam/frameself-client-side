@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import reqToServer from "../../features/axiosInstance";
 import { configureDays } from "../../features/signUpFeature";
 import DateInputInSingUpForm from "./DateInputInSingupForm";
 import GenderInputInSignUP from "./GenderInputInSignUP";
@@ -12,8 +13,11 @@ const SignupForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const signUp = (data) => {
-    console.log(data);
+  const signUp = async (formData) => {
+
+      const {data} = await reqToServer.post("/user/register", formData);
+      console.log(data);
+    
   };
 
   return (
