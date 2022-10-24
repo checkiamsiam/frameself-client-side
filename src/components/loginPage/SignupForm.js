@@ -1,12 +1,21 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
+import Cookies from "js-cookie";
+import { setUser } from "../../actions/userAction";
 import reqToServer from "../../features/axiosInstance";
 import { configureDays } from "../../features/signUpFeature";
 import DateInputInSingUpForm from "./DateInputInSingupForm";
 import GenderInputInSignUP from "./GenderInputInSignUP";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const formRef = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [days, setDays] = useState(Array.from(new Array(31), (element, index) => 1 + index));
   const {
     register,
@@ -14,10 +23,18 @@ const SignupForm = () => {
     formState: { errors },
   } = useForm();
   const signUp = async (formData) => {
-
-      const {data} = await reqToServer.post("/user/register", formData);
-      console.log(data);
-    
+    try {
+      setLoading(true);
+      const { data } = await reqToServer.post("/user/register", formData);
+      dispatch(setUser(data.data));
+      Cookies.set("userData", JSON.stringify(data.data));
+      setError("");
+      navigate("/");
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error?.response?.data.message);
+    }
   };
 
   return (
@@ -112,6 +129,9 @@ const SignupForm = () => {
           time.
         </p>
       </div>
+      {loading && <div className="mt-3 flex justify-center items-center">
+        <ClipLoader />
+      </div>}
       <div className="flex justify-center mt-4">
         <input
           className="bg-green-color hover:bg-green-600 text-white font-bold text-xl px-20 py-1 rounded-lg cursor-pointer"
@@ -119,6 +139,7 @@ const SignupForm = () => {
           value="Sign Up"
         />
       </div>
+      {error && <p className="text-error mt-3 text-center">{error}</p>}
     </form>
   );
 };

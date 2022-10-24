@@ -1,6 +1,7 @@
+import Cookies from "js-cookie";
 import { login } from "../actions/action.type.constants";
 
-const initialState = {};
+const initialState = Cookies.get("userData") ? JSON.parse(Cookies.get("userData")) : {};
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
